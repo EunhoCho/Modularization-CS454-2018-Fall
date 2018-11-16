@@ -6,6 +6,11 @@ from pyparsing import Forward, Word, alphas, alphanums, nums, ZeroOrMore, Litera
 import sys
 import pydot
 
+#done - read .dot file(.gv)
+#done - visualize graph
+#done - calculate CF for a module
+#plan - apply algorithm and make clusters
+
 """ examples
 # make a graph directly
 dot = Digraph(comment='The Round Table')
@@ -63,8 +68,42 @@ def parser(dot, arrow):
     edges = get_edges(b,arrow)
     edges[-1][1] = '"not found"'
     return edges
-
+def is_contain(List,element):
+    if List.count(element) >= 1:
+        return True
+    else:
+        return False
+    
+def calculate_CF(cluster,edges):
+    mu_i = 0
+    e_ij = 0
+    e_ji = 0
+    
+    for edge in edges:
+        from_node = edge[0]
+        to_node = edge[1]
+        if is_contain(cluster, from_node):
+            if is_contain(cluster, to_node):
+                mu_i +=1
+            else:
+                e_ij +=1
+        elif is_contain(cluster, to_node):
+            e_ji +=1
+    CF_i = mu_i / (mu_i + (e_ij+e_ji)/2)
+    return CF_i
+    
+def find_nodes(edges):
+    nodes = []
+    for edge in edges:
+        if not(is_contain(nodes, edge[0])):
+            nodes.append(edges[0])
+        
+#read .gv file(dot) and create graphs
 dot_file = read_and_render('test/test.gv')
 print(dot_file.source)
 edges = parser(dot_file,"->") # second argument should be "--" or "->" (depends on .dot file format)
 print(edges)
+
+#calculate CF
+cluster = ['"scaffold-hunter-2.6.3.jar"','"java.base"']
+CF1 = calculate_CF(cluster,edges)
