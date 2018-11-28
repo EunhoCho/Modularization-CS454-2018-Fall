@@ -56,7 +56,7 @@ def compare_similarity(clusters, nodes):  # compare two clusters in clusters lis
                 max_c1 = clusters[i]
                 max_c2 = clusters[j]
     # print("UENM= ",max_UENM)
-    return [max_c1, max_c2]
+    return max_c1, max_c2
 
 
 def merge_cluster(c1, c2, clusters, nodes):  # merge two most-similar clusters into one cluster.
