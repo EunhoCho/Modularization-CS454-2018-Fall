@@ -341,7 +341,7 @@ for i in range(len(nodes)):
 
 # apply WCA algorithm
 clusters = cluster_initialize(nodes)
-[result_MQ, result_clusters] = applyWCA(clusters, MDG, nodes, edges)  # result of WCA algorithm
+[result_MQ, result_clusters] = applyWCA(clusters, nodes, edges)  # result of WCA algorithm
 
 for c in result_clusters:  # print all clusters which are not singleton
     if 1 != len(c.get_nodes()):
