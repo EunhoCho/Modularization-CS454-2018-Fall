@@ -1,4 +1,7 @@
-class Node(object):  # node class
+class Node(object):
+    """
+    Node is entity for clustering problem
+    """
     def __init__(self, name):
         self.name = name
         self.from_node = []
@@ -12,61 +15,46 @@ class Node(object):  # node class
         return self.name
 
     def get_from_node(self):
+        """
+        Return a list of node that linked by edge from this node
+        :return: A list of node that linked by edge from this node
+        """
         return self.from_node
 
     def get_to_node(self):
+        """
+        Return a list of node that linked by edge to this node
+        :return: A list of node that linked by edge to this node
+        """
         return self.to_node
 
     def get_feature_vector(self):
+        """
+        Return feature vector of this node
+        :return: A list of number which represents feature vector
+        """
         return self.feature_vector[:]
 
     def add_from_node(self, _input):
+        """
+        Add a node that linked by edge from this node
+        :param _input: A node that linked by edge from this node
+        :return: None
+        """
         self.from_node.append(_input)
 
     def add_to_node(self, _input):
+        """
+        Add a node that linked by edge to this node
+        :param _input: A node that linked by edge to this node
+        :return: None
+        """
         self.to_node.append(_input)
 
     def set_feature_vector(self, _input):
+        """
+        Add feature vector of this node
+        :param _input: A list of number which represents feature vector
+        :return: None
+        """
         self.feature_vector = _input[:]
-
-
-def search_node(nodes, name):
-    for node in nodes:
-        if node.name == name:
-            return node
-    return None
-
-
-def make_nodes(edges):  # make 'nodes' list composed of node class
-    nodes = []
-    for edge in edges:
-        from_node = search_node(nodes, edge[0])
-        to_node = search_node(nodes, edge[1])
-        if from_node is None:
-            from_node = Node(edge[0])
-        if to_node is None:
-            to_node = Node(edge[1])
-
-        from_node.add_from_node(to_node)
-        to_node.add_to_node(from_node)
-
-    return nodes
-
-
-def make_dependency_graph(nodes, node_names):  # make dependency graph using edge information
-    MDG = []
-    for i in range(len(nodes)):
-        MDG.append([0] * len(nodes))
-    # MDG = zeros(nodes_num, nodes_num) (n x n matrix)
-
-    for i in range(len(nodes)):
-        curr_node = nodes[i]
-        from_node = curr_node.get_from_node()
-        j = 0
-        for node_name in node_names:
-            if node_name in from_node:
-                MDG[i][j] = 1
-            else:
-                MDG[i][j] = 0
-            j += 1
-    return MDG

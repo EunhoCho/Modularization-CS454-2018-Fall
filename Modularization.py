@@ -1,6 +1,7 @@
 import sys
 import DotParser
-import Node
+import HC
+import MDG
 from WCA import WCA
 
 # read .gv file(dot) and create graphs
@@ -11,15 +12,13 @@ print(dot_file.source)
 edges = DotParser.parser(dot_file, "->")  # second argument should be "--" or "->" (depends on .dot file format)
 print(edges)
 
-# make nodes as a list of node classes
-nodes = Node.make_nodes(edges)
+# make dependency graph and set feature vector
+targetMDG = MDG.MDG(edges)
+targetMDG.set_feature_vector()
 
-# make dependency graph
-MDG = Node.make_dependency_graph(edges, nodes)
+modularizeMethod = sys.argv[1]
 
-# get feature vector using MDG
-for i in range(len(nodes)):
-    nodes[i].set_feature_vector(MDG[i])
-
-if sys.argv[1] == 'WCA':
-    WCA.WCA(nodes, edges)
+if modularizeMethod == 'WCA':
+    WCA.WCA(targetMDG)
+elif modularizeMethod == 'HC':
+    HC.HC(targetMDG)

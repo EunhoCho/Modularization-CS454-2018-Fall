@@ -90,17 +90,17 @@ def merge_cluster(c1, c2, clusters, nodes):  # merge two most-similar clusters i
     return clus
 
 
-def applyWCA(clusters, nodes, edges):
+def applyWCA(clusters, targetMDG):
     max_TurboMQ = 0
     max_clusters = []
-    numofnodes = len(nodes)
+    numofnodes = len(targetMDG.nodes)
     count = 0
     for i in range(numofnodes - 1):  # clustering
-        [c1, c2] = compare_similarity(clusters, nodes)  # clusters중 가장 비슷한 2개의 cluster를 선택
+        [c1, c2] = compare_similarity(clusters, targetMDG.nodes)  # clusters중 가장 비슷한 2개의 cluster를 선택
         # print (c1.nodes)
         # print (c2.nodes)
-        clusters = merge_cluster(c1, c2, clusters, nodes)  # c1,c2가 merge된 clusters를 return
-        TMQ = TurboMQ.calculate_fitness(clusters, edges)  # calculate TurboMQ of these clusters
+        clusters = merge_cluster(c1, c2, clusters, targetMDG.nodes)  # c1,c2가 merge된 clusters를 return
+        TMQ = TurboMQ.calculate_fitness(clusters, targetMDG.edges)  # calculate TurboMQ of these clusters
         if TMQ >= max_TurboMQ and TMQ != 1:
             max_TurboMQ = TMQ
             max_clusters = clusters[:]
@@ -114,10 +114,10 @@ def applyWCA(clusters, nodes, edges):
     return [max_TurboMQ, max_clusters]
 
 
-def WCA(nodes, edges):
+def WCA(targetMDG):
     # apply WCA algorithm
-    clusters = cluster_initialize(nodes)
-    result_MQ, result_clusters = applyWCA(clusters, nodes, edges)  # result of WCA algorithm
+    clusters = cluster_initialize(targetMDG.nodes)
+    result_MQ, result_clusters = applyWCA(clusters, targetMDG)  # result of WCA algorithm
 
     for c in result_clusters:  # print all clusters which are not singleton
         if 1 != len(c.get_nodes()):
