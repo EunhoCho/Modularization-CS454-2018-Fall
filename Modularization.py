@@ -1,6 +1,6 @@
 import sys
 import DotParser
-# import HC
+import HC
 import MDG
 from WCA import WCA
 

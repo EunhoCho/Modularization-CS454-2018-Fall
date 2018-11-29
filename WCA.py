@@ -2,6 +2,7 @@
 
 import Cluster
 import TurboMQ
+from copy import copy
 
 
 def cluster_initialize(nodes):
@@ -36,8 +37,8 @@ def compare_similarity(clusters, nodes):
             if i >= j:
                 continue
 
-            cluster1 = clusters[i].__copy__()
-            cluster2 = clusters[j].__copy__()
+            cluster1 = copy(clusters[i])
+            cluster2 = copy(clusters[j])
             feature1 = cluster1.get_feature_vector()
             feature2 = cluster2.get_feature_vector()
             
