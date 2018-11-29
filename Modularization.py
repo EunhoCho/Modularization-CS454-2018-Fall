@@ -4,7 +4,8 @@ import HC
 import MDG
 from WCA import WCA
 
-def main ():
+
+def main():
     # read .gv file(dot) and create graphs
     file_path = 'test/launch4j.dot'
 
@@ -29,6 +30,7 @@ def main ():
     elif modularizeMethod == 'WCA_HC':
         clusters = HC.WCA_HC(targetMDG, WCA(targetMDG))
     DotParser.write_file (file_path, clusters)
+
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,5 @@
 # TurboMQ functions - CF, summation of CF(calculate_fitness) functions
 
-
 def calculate_CF(cluster, targetMDG):
     """
     Calculate cluster factor for single cluster

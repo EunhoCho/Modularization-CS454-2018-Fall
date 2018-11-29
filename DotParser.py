@@ -1,6 +1,7 @@
 from graphviz import Source
 import os
 
+
 def read_and_render(filename):
     """
     Read file and return source
