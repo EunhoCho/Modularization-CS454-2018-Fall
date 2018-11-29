@@ -10,15 +10,16 @@ print(dot_file.source)
 
 # get edge information and parse it
 edges = DotParser.parser(dot_file, "->")  # second argument should be "--" or "->" (depends on .dot file format)
-print(edges)
+#print(edges)
 
 # make dependency graph and set feature vector
 targetMDG = MDG.MDG(edges)
+print(targetMDG.edges)
 targetMDG.set_feature_vector()
 
 modularizeMethod = sys.argv[1]
 
 if modularizeMethod == 'WCA':
-    WCA.WCA(targetMDG)
+    WCA(targetMDG)
 elif modularizeMethod == 'HC':
     HC.HC(targetMDG)

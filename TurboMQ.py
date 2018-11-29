@@ -1,18 +1,18 @@
 # TurboMQ functions - CF, summation of CF(calculate_fitness) functions
 
 
-def calculate_CF(cluster, edges):
+def calculate_CF(cluster, targetMDG):
     """
     Calculate cluster factor for single cluster
     :param cluster: target cluster for calculating Cluster factor
-    :param edges: A list of edges with source / target node
+    :param targetMDG: Dependency graph including node and edge information
     :return: Cluster factor for given cluster
     """
     mu_i = 0
     e_ij = 0
     e_ji = 0
 
-    for edge in edges:
+    for edge in targetMDG.edges:
         from_node = edge[0]
         to_node = edge[1]
         if from_node in cluster:
@@ -22,15 +22,19 @@ def calculate_CF(cluster, edges):
                 e_ij += 1
         elif to_node in cluster:
             e_ji += 1
-        CF_i = mu_i / (mu_i + ((e_ij + e_ji) / 2))
+
+        if mu_i == 0:
+            CF_i = 0
+        else:
+            CF_i = mu_i / (mu_i + ((e_ij + e_ji) / 2))
     return CF_i
 
 
-def calculate_fitness(clusters, edges):
+def calculate_fitness(clusters, targetMDG):
     """
     Calculate TurboMQ for clustering result
     :param clusters: A list of clusters
-    :param edges: A list of edges with source / target node
+    :param targetMDG: Dependency graph including node and edge information
     :return: TurboMQ for clustering result
     """
     TurboMQ = 0
@@ -40,5 +44,5 @@ def calculate_fitness(clusters, edges):
         for node in cluster.get_nodes():
             names.append(node)
 
-        TurboMQ += calculate_CF(names, edges)
+        TurboMQ += calculate_CF(names, targetMDG)
     return TurboMQ

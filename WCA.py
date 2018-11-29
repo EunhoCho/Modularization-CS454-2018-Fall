@@ -7,7 +7,7 @@ def cluster_initialize(nodes):  # make initial cluster which contains all single
     numofnodes = len(nodes)
     for i in range(numofnodes):
         cluster = Cluster.Cluster()
-        cluster.add_node(nodes[i].get_name())
+        cluster.add_node(nodes[i])
         cluster.set_feature_vector(nodes[i].get_feature_vector())
         clusters.append(cluster)
     return clusters
@@ -25,8 +25,8 @@ def compare_similarity(clusters, nodes):  # compare two clusters in clusters lis
             if i >= j:
                 continue
 
-            cluster1 = clusters[i].copy()
-            cluster2 = clusters[j].copy()
+            cluster1 = clusters[i].__copy__()
+            cluster2 = clusters[j].__copy__()
             feature1 = cluster1.get_feature_vector()
             feature2 = cluster2.get_feature_vector()
             # use WCA_UENM value
@@ -100,7 +100,7 @@ def applyWCA(clusters, targetMDG):
         # print (c1.nodes)
         # print (c2.nodes)
         clusters = merge_cluster(c1, c2, clusters, targetMDG.nodes)  # c1,c2°¡ mergeµÈ clusters¸¦ return
-        TMQ = TurboMQ.calculate_fitness(clusters, targetMDG.edges)  # calculate TurboMQ of these clusters
+        TMQ = TurboMQ.calculate_fitness(clusters, targetMDG)  # calculate TurboMQ of these clusters
         if TMQ >= max_TurboMQ and TMQ != 1:
             max_TurboMQ = TMQ
             max_clusters = clusters[:]
@@ -110,7 +110,7 @@ def applyWCA(clusters, targetMDG):
         #if count == 3:
             #print("TurboMQ = ", TurboMQ)
             #break
-        print("TurboMQ = ", TurboMQ)
+        print("TurboMQ = ", TMQ)
     return [max_TurboMQ, max_clusters]
 
 
