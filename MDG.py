@@ -28,12 +28,12 @@ class MDG:
         """
         Search node with given name
         :param name: Name of target node
-        :return: A node that the name is the same or None
+        :return: A node and its index that the name is the same or None
         """
         for i in range(len(self.nodes)):
             if self.nodes[i].name == name:
                 return self.nodes[i], i
-        return None
+        return None, None
 
     def add_node(self, node):
         """
