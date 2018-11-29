@@ -6,7 +6,7 @@ def cluster_initialize(nodes):  # make initial cluster which contains all single
     clusters = []
     numofnodes = len(nodes)
     for i in range(numofnodes):
-        cluster = Cluster._cluster()
+        cluster = Cluster.Cluster()
         cluster.add_node(nodes[i].get_name())
         cluster.set_feature_vector(nodes[i].get_feature_vector())
         clusters.append(cluster)
@@ -17,8 +17,8 @@ def compare_similarity(clusters, nodes):  # compare two clusters in clusters lis
     numofcluster = len(clusters)
     numofnodes = len(nodes)  # numofnodes = dimension of feature vector
     max_UENM = -1
-    max_c1 = Cluster._cluster()
-    max_c2 = Cluster._cluster()
+    max_c1 = Cluster.Cluster()
+    max_c2 = Cluster.Cluster()
 
     for i in range(numofcluster):  # for all two-cluster combinations
         for j in range(numofcluster):
@@ -63,7 +63,7 @@ def merge_cluster(c1, c2, clusters, nodes):  # merge two most-similar clusters i
     clus = clusters[:]
     clus.remove(c1)
     clus.remove(c2)
-    merged_cluster = Cluster._cluster()
+    merged_cluster = Cluster.Cluster()
     c1_nodes = c1.get_nodes()
     c2_nodes = c2.get_nodes()
     for node in c1_nodes:
@@ -100,9 +100,9 @@ def applyWCA(clusters, nodes, edges):
         # print (c1.nodes)
         # print (c2.nodes)
         clusters = merge_cluster(c1, c2, clusters, nodes)  # c1,c2°¡ mergeµÈ clusters¸¦ return
-        TurboMQ = TurboMQ.calculate_fitness(clusters, edges)  # calculate TurboMQ of these clusters
-        if TurboMQ >= max_TurboMQ and TurboMQ != 1:
-            max_TurboMQ = TurboMQ
+        TMQ = TurboMQ.calculate_fitness(clusters, edges)  # calculate TurboMQ of these clusters
+        if TMQ >= max_TurboMQ and TMQ != 1:
+            max_TurboMQ = TMQ
             max_clusters = clusters[:]
             count = 0
         else:
