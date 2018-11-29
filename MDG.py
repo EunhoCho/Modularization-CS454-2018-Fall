@@ -1,6 +1,5 @@
 import Node
 
-
 class MDG:
     def __init__(self, edges):
         self.edges = []

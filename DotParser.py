@@ -1,5 +1,5 @@
 from graphviz import Source
-
+import os
 
 def read_and_render(filename):
     """
@@ -67,3 +67,34 @@ def parser(dot, arrow):
     b = parse_line(a)
     edges = get_edges(b, arrow)
     return edges
+
+def write_file (filepath, clusters):
+    # if file exists, remove and create new file.
+    if os.path.exists("test/result.gv"):
+        os.remove("test/result.gv")
+
+    f = open("test/result.gv", "w")
+    g = open(filepath, "r")
+    lines = g.readlines()
+    g.close()
+
+    for i in range(len(lines) - 1):
+        f.write (lines[i])
+    f.write("\n\n")
+    cluster_num = len(clusters)
+
+    for i in range(cluster_num):
+        data = "  subgraph cluster_" + str(i) + " {\n"
+        f.write(data)
+        data = '    label="Cluster ' + str(i) +'";'
+        for node in clusters[i].get_nodes():
+            data = "    "+ str(node) +"; "
+            f.write(data)
+        f.write("\n")
+        f.write("  }\n")
+
+    f.write("}")
+    f.close()
+
+    a = Source.from_file("test/result.gv")
+    a.render("test/result.gv", view=True)    
