@@ -1,4 +1,4 @@
-class _node(object):  # node class
+class Node(object):  # node class
     def __init__(self, name):
         self.name = name
         self.from_node = []
@@ -43,9 +43,9 @@ def make_nodes(edges):  # make 'nodes' list composed of node class
         from_node = search_node(nodes, edge[0])
         to_node = search_node(nodes, edge[1])
         if from_node is None:
-            from_node = _node(edge[0])
+            from_node = Node(edge[0])
         if to_node is None:
-            to_node = _node(edge[1])
+            to_node = Node(edge[1])
 
         from_node.add_from_node(to_node)
         to_node.add_to_node(from_node)

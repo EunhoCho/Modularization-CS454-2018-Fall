@@ -2,6 +2,12 @@
 
 
 def calculate_CF(cluster, edges):
+    """
+    Calculate cluster factor for single cluster
+    :param cluster: target cluster for calculating Cluster factor
+    :param edges: A list of edges with source / target node
+    :return: Cluster factor for given cluster
+    """
     mu_i = 0
     e_ij = 0
     e_ji = 0
@@ -21,6 +27,12 @@ def calculate_CF(cluster, edges):
 
 
 def calculate_fitness(clusters, edges):
+    """
+    Calculate TurboMQ for clustering result
+    :param clusters: A list of clusters
+    :param edges: A list of edges with source / target node
+    :return: TurboMQ for clustering result
+    """
     TurboMQ = 0
 
     for cluster in clusters:
