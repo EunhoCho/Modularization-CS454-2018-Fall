@@ -28,6 +28,14 @@ class Cluster(object):
         """
         self.nodes.append(_input)
 
+    def remove_node(self, _input):
+        """
+        Remove given node to this cluster
+        :param _input: Node wanted to remove in this cluster
+        :return: None
+        """
+        self.nodes.remove(_input)
+
     def set_feature_vector(self, _input):
         """
         Add given feature vector to this cluster

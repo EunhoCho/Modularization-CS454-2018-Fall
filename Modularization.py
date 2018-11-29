@@ -24,8 +24,11 @@ def main ():
     if modularizeMethod == 'WCA':
         clusters = WCA(targetMDG)
         DotParser.write_file (file_path, clusters)
-    # elif modularizeMethod == 'HC':
-    #     HC.HC(targetMDG)
+    elif modularizeMethod == 'HC':
+        clusters = HC.HC(targetMDG)
+    elif modularizeMethod == 'WCA_HC':
+        clusters = HC.WCA_HC(targetMDG, WCA(targetMDG))
+    DotParser.write_file (file_path, clusters)
 
 if __name__ == "__main__":
     main()
