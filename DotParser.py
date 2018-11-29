@@ -30,11 +30,14 @@ def parser(dot, arrow):  # parse .dot file and generate dependency(A->B) list
         edges = []
         for i in range(length):
             if data[i] == arrow:
+                if data[i - 1] == '"not':
+                    data[i - 1] = '"not found"'
+                if data[i + 1] == '"not':
+                    data[i + 1] = '"not found"'
                 edges.append([data[i - 1], data[i + 1]])
         return edges
 
     a = parse_dot(dot)
     b = parse_line(a)
     edges = get_edges(b, arrow)
-    edges[-1][1] = '"not found"'
     return edges

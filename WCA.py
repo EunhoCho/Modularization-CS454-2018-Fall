@@ -82,7 +82,7 @@ def merge_cluster(c1, c2, clusters, nodes):  # merge two most-similar clusters i
     numnode2 = len(c2.get_nodes())
 
     for i in range(numofnodes):
-        feature_vector[i] = numnode1 * feature1[i] + numnode2 * feature2[i]
+        feature_vector[i] = feature1[i] + feature2[i]
         feature_vector[i] /= (numnode1 + numnode2)
     merged_cluster.set_feature_vector(feature_vector)
 
@@ -101,15 +101,15 @@ def applyWCA(clusters, nodes, edges):
         # print (c2.nodes)
         clusters = merge_cluster(c1, c2, clusters, nodes)  # c1,c2°¡ mergeµÈ clusters¸¦ return
         TurboMQ = TurboMQ.calculate_fitness(clusters, edges)  # calculate TurboMQ of these clusters
-        if TurboMQ > max_TurboMQ:
+        if TurboMQ >= max_TurboMQ and TurboMQ != 1:
             max_TurboMQ = TurboMQ
             max_clusters = clusters[:]
             count = 0
         else:
             count += 1
-        if count == 3:
-            print("TurboMQ = ", TurboMQ)
-            break
+        #if count == 3:
+            #print("TurboMQ = ", TurboMQ)
+            #break
         print("TurboMQ = ", TurboMQ)
     return [max_TurboMQ, max_clusters]
 

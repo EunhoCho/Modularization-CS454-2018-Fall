@@ -54,7 +54,9 @@ def make_nodes(edges):  # make 'nodes' list composed of node class
 
 
 def make_dependency_graph(nodes, node_names):  # make dependency graph using edge information
-    MDG = [[0] * len(nodes)] * len(nodes)
+    MDG = []
+    for i in range(len(nodes)):
+        MDG.append([0] * len(nodes))
     # MDG = zeros(nodes_num, nodes_num) (n x n matrix)
 
     for i in range(len(nodes)):

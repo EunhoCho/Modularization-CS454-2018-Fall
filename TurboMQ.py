@@ -16,7 +16,7 @@ def calculate_CF(cluster, edges):
                 e_ij += 1
         elif to_node in cluster:
             e_ji += 1
-    CF_i = mu_i / (mu_i + (e_ij + e_ji) / 2)
+        CF_i = mu_i / (mu_i + ((e_ij + e_ji) / 2))
     return CF_i
 
 
