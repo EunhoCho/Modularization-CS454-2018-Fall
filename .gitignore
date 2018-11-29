@@ -216,3 +216,6 @@ pip-selfcheck.json
 
 
 .idea/
+
+# No test file
+test/result.*

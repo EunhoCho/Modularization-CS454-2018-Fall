@@ -1,25 +1,31 @@
 import sys
 import DotParser
-import HC
+# import HC
 import MDG
 from WCA import WCA
 
-# read .gv file(dot) and create graphs
-dot_file = DotParser.read_and_render('test/all.gv')
-print(dot_file.source)
+def main ():
+    # read .gv file(dot) and create graphs
+    file_path = 'test/launch4j.dot'
 
-# get edge information and parse it
-edges = DotParser.parser(dot_file, "->")  # second argument should be "--" or "->" (depends on .dot file format)
-#print(edges)
+    dot_file = DotParser.read_and_render(file_path)
+    print(dot_file.source)
 
-# make dependency graph and set feature vector
-targetMDG = MDG.MDG(edges)
-print(targetMDG.edges)
-targetMDG.set_feature_vector()
+    # get edge information and parse it
+    edges = DotParser.parser(dot_file, "->")  # second argument should be "--" or "->" (depends on .dot file format)
 
-modularizeMethod = sys.argv[1]
+    # make dependency graph and set feature vector
+    targetMDG = MDG.MDG(edges)
+    print(targetMDG.edges)
+    targetMDG.set_feature_vector()
 
-if modularizeMethod == 'WCA':
-    WCA(targetMDG)
-elif modularizeMethod == 'HC':
-    HC.HC(targetMDG)
+    modularizeMethod = sys.argv[1]
+
+    if modularizeMethod == 'WCA':
+        clusters = WCA(targetMDG)
+        DotParser.write_file (file_path, clusters)
+    # elif modularizeMethod == 'HC':
+    #     HC.HC(targetMDG)
+
+if __name__ == "__main__":
+    main()

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import Cluster
 import TurboMQ
 
@@ -38,13 +40,10 @@ def compare_similarity(clusters, nodes):
             cluster2 = clusters[j].__copy__()
             feature1 = cluster1.get_feature_vector()
             feature2 = cluster2.get_feature_vector()
+            
             # use WCA_UENM value
-            a = 0
-            b = 0
-            c = 0
-            d = 0
-            n = 0
-            Ma = 0
+            a = b = c = d = n = Ma = 0
+
             # get a,b,c,d,n,Ma
             for k in range(len(nodes)):
                 if feature1[k] > 0 and feature2[k] > 0:
@@ -56,14 +55,17 @@ def compare_similarity(clusters, nodes):
                     c += 1
                 if feature1[k] == 0 and feature2[k] == 0:
                     d += 1
+
             # calculate UENM
             n = a + b + c + d
             UENM = (0.5 * Ma) / ((0.5 * Ma) + b + c + n)
+
             # if new UENM is higher than origianal max_UENM, then update it
             if UENM > max_UENM:
                 max_UENM = UENM
                 max_c1 = clusters[i]
                 max_c2 = clusters[j]
+                
     # print("UENM= ",max_UENM)
     return max_c1, max_c2
 
@@ -122,7 +124,7 @@ def applyWCA(clusters, targetMDG):
         c1, c2 = compare_similarity(clusters, targetMDG.nodes)
         # print (c1.nodes)
         # print (c2.nodes)
-        clusters = merge_cluster(c1, c2, clusters, targetMDG.nodes)  # c1,c2°¡ mergeµÈ clusters¸¦ return
+        clusters = merge_cluster(c1, c2, clusters, targetMDG.nodes)  # c1,c2ï¿½ï¿½ mergeï¿½ï¿½ clustersï¿½ï¿½ return
         TMQ = TurboMQ.calculate_fitness(clusters, targetMDG)  # calculate TurboMQ of these clusters
         if TMQ >= max_TurboMQ and TMQ != 1:
             max_TurboMQ = TMQ
