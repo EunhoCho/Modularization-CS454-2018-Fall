@@ -6,7 +6,7 @@ from WCA import WCA
 
 # read .gv file(dot) and create graphs
 dot_file = DotParser.read_and_render('test/all.gv')
-print(dot_file.source)
+#print(dot_file.source)
 
 # get edge information and parse it
 edges = DotParser.parser(dot_file, "->")  # second argument should be "--" or "->" (depends on .dot file format)
@@ -23,3 +23,5 @@ if modularizeMethod == 'WCA':
     WCA(targetMDG)
 elif modularizeMethod == 'HC':
     HC.HC(targetMDG)
+elif modularizeMethod == 'WCA_HC':
+    HC.WCA_HC(targetMDG, WCA(targetMDG))
