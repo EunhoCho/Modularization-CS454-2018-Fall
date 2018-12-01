@@ -98,4 +98,4 @@ def write_file (filepath, clusters):
     f.close()
 
     a = Source.from_file("test/result.gv")
-    a.render("test/result.gv", view=True)    
+    a.render("test/result.gv", view=True)

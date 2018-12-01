@@ -133,9 +133,9 @@ def applyWCA(clusters, targetMDG):
             count = 0
         else:
             count += 1
-        # if count == 3:
-            # print("TurboMQ = ", TurboMQ)
-            # break
+        if count == 3:
+            print("TurboMQ = ", TurboMQ)
+            break
         # print("TurboMQ = ", TMQ)
     return max_TurboMQ, max_clusters
 
