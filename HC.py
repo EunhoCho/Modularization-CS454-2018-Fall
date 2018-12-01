@@ -118,6 +118,10 @@ class HillClimber:
         return None
 
     def search_highest_neighbor(self):
+        """
+        Search the highest neighbor, and return the moved node and modified clusters
+        :return: the moved node and modified clusters of the highest neighbor
+        """
         max_score = self.score
         target_node = None
         from_idx = None
@@ -141,6 +145,10 @@ class HillClimber:
         return target_node, from_idx, to_idx
 
     def climb(self):
+        """
+        Climb to a higher neighborhood than the current state.
+        :return: boolean, Whether or not it climbs to a higher neighborhood than the original state.
+        """
         target_node, from_idx, to_idx = self.search_highest_neighbor()
         if not target_node:
             return False
