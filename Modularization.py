@@ -1,6 +1,7 @@
 import sys
 import DotParser
 import HC
+import SA
 import MDG
 import PSO
 from WCA import WCA
@@ -31,6 +32,10 @@ def main():
         clusters = HC.HC(targetMDG)
     elif modularizeMethod == 'WCA_HC':
         clusters = HC.WCA_HC(targetMDG, WCA(targetMDG))
+    elif modularizeMethod == 'SA':
+        clusters = SA.SA(targetMDG)
+    elif modularizeMethod == 'WCA_SA':
+        clusters = SA.WCA_SA(targetMDG, WCA(targetMDG))
     elif modularizeMethod == 'PSO':
         clusters = PSO.PSO(targetMDG)
     elif modularizeMethod == 'WCA_PSO':
