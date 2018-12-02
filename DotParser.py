@@ -69,12 +69,14 @@ def parser(dot, arrow):
     edges = get_edges(b, arrow)
     return edges
 
-def write_file (filepath, clusters):
+def write_file (filepath, method, clusters):
     # if file exists, remove and create new file.
-    if os.path.exists("test/result.gv"):
-        os.remove("test/result.gv")
+    result_path = filepath[0:-4]
+    result_path = "result/"+result_path +"_"+ method +"_result.gv"
+    if os.path.exists(result_path):
+        os.remove(result_path)
 
-    f = open("test/result.gv", "w")
+    f = open(result_path, "w")
     g = open(filepath, "r")
     lines = g.readlines()
     g.close()
@@ -97,5 +99,5 @@ def write_file (filepath, clusters):
     f.write("}")
     f.close()
 
-    a = Source.from_file("test/result.gv")
-    a.render("test/result.gv", view=True)
+    a = Source.from_file(result_path)
+    a.render(result_path, view=True)

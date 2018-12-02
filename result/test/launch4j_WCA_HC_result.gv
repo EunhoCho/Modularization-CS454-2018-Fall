@@ -1,0 +1,76 @@
+digraph "summary" {
+  "launch4j.jar"                                     -> "ant.jar";
+  "launch4j.jar"                                     -> "commons-beanutils.jar";
+  "launch4j.jar"                                     -> "formsrt.jar";
+  "launch4j.jar"                                     -> "foxtrot.jar";
+  "launch4j.jar"                                     -> "java.base";
+  "launch4j.jar"                                     -> "java.desktop";
+  "launch4j.jar"                                     -> "java.prefs";
+  "launch4j.jar"                                     -> "java.xml";
+  "launch4j.jar"                                     -> "jgoodies-forms.jar";
+  "launch4j.jar"                                     -> "jgoodies-looks.jar";
+  "launch4j.jar"                                     -> "xstream.jar";
+  "ant.jar"                                          -> "java.base";
+  "ant.jar"                                          -> "java.sql";
+  "ant.jar"                                          -> "java.xml";
+  "ant.jar"                                          -> "not found";
+  "commons-beanutils.jar"                            -> "commons-logging.jar";
+  "commons-beanutils.jar"                            -> "java.base";
+  "commons-beanutils.jar"                            -> "java.desktop";
+  "commons-beanutils.jar"                            -> "java.sql";
+  "commons-beanutils.jar"                            -> "not found";
+  "commons-logging.jar"                              -> "java.base";
+  "commons-logging.jar"                              -> "java.logging";
+  "commons-logging.jar"                              -> "not found";
+  "formsrt.jar"                                      -> "java.base";
+  "formsrt.jar"                                      -> "java.datatransfer";
+  "formsrt.jar"                                      -> "java.desktop";
+  "formsrt.jar"                                      -> "java.logging";
+  "formsrt.jar"                                      -> "java.rmi";
+  "formsrt.jar"                                      -> "jgoodies-forms.jar";
+  "formsrt.jar"                                      -> "not found";
+  "foxtrot.jar"                                      -> "java.base";
+  "foxtrot.jar"                                      -> "java.desktop";
+  "jgoodies-common.jar"                              -> "java.base";
+  "jgoodies-common.jar"                              -> "java.desktop";
+  "jgoodies-common.jar"                              -> "java.logging";
+  "jgoodies-forms.jar"                               -> "java.base";
+  "jgoodies-forms.jar"                               -> "java.desktop";
+  "jgoodies-forms.jar"                               -> "java.logging";
+  "jgoodies-forms.jar"                               -> "jgoodies-common.jar";
+  "jgoodies-looks.jar"                               -> "java.base";
+  "jgoodies-looks.jar"                               -> "java.desktop";
+  "jgoodies-looks.jar"                               -> "jgoodies-common.jar";
+  "xstream.jar"                                      -> "java.base";
+  "xstream.jar"                                      -> "java.desktop";
+  "xstream.jar"                                      -> "java.sql";
+  "xstream.jar"                                      -> "java.xml";
+  "xstream.jar"                                      -> "jdk.unsupported";
+  "xstream.jar"                                      -> "not found";
+
+
+  subgraph cluster_0 {
+    "java.prefs"; 
+  }
+  subgraph cluster_1 {
+    "ant.jar";     "java.xml"; 
+  }
+  subgraph cluster_2 {
+    "commons-logging.jar";     "java.logging"; 
+  }
+  subgraph cluster_3 {
+    "formsrt.jar";     "java.datatransfer";     "java.rmi"; 
+  }
+  subgraph cluster_4 {
+    "xstream.jar";     "jdk.unsupported"; 
+  }
+  subgraph cluster_5 {
+    "commons-beanutils.jar";     "java.sql";     "not found"; 
+  }
+  subgraph cluster_6 {
+    "launch4j.jar";     "foxtrot.jar";     "java.base"; 
+  }
+  subgraph cluster_7 {
+    "java.desktop";     "jgoodies-forms.jar";     "jgoodies-looks.jar";     "jgoodies-common.jar"; 
+  }
+}
