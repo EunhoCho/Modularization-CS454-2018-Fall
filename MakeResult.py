@@ -28,13 +28,33 @@ def get_information(targetMDG, file_path): #using target_MDG and a benchmark, cr
     clusters_set = []
     TMQ = []
     cohe_coup = []
+    print("====WCA start====\n")
     clusters_set.append(WCA(targetMDG))
+    print("====WCA end====\n\n")
+    
+    print("====HC start====\n")
     clusters_set.append(HC.HC(targetMDG))
+    print("====HC end====\n\n")
+    
+    print("====WCA_HC start====\n")
     clusters_set.append(HC.WCA_HC(targetMDG, WCA(targetMDG)))
+    print("====WCA_HC end====\n\n")
+    
+    print("====SA start====\n")
     clusters_set.append(SA.SA(targetMDG))
+    print("====SA end====\n\n")
+    
+    print("====WCA_SA start====\n")
     clusters_set.append(SA.WCA_SA(targetMDG, WCA(targetMDG)))
+    print("====WCA_SA end====\n\n")
+    
+    print("====PSO start====\n\n")
     clusters_set.append(PSO.PSO(targetMDG))
+    print("====PSO end====\n\n")
+    
+    print("====WCA_PSO start====\n\n")
     clusters_set.append(PSO.WCA_PSO(targetMDG, WCA(targetMDG)))
+    print("====WCA_PSO end====\n\n")
     
     #get TMQ data
     for clusters in clusters_set:
@@ -54,11 +74,12 @@ def print_result():
     
     #test for all benchmarks
     for file_path in file_paths:
-        
+        print("\n========file : "+file_path +"start ========\n")
         targetMDG = make_target_MDG(file_path)
         TMQ, cohe_coup, clusters_set = get_information(targetMDG, file_path)
         TMQs.append(TMQ)
         cohe_coups.append(cohe_coup)
+        print("\n========file : "+file_path +"end ========\n\n\n")
         
     #print Information
     print("\n=====Result=====")
