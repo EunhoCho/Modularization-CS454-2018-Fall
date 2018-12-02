@@ -47,7 +47,7 @@ def get_information(targetMDG, file_path): #using target_MDG and a benchmark, cr
     return TMQ, cohe_coup, clusters_set
 
 def print_result():
-    file_paths=['test/launch4j.dot','test/hibernate.dot','test/pmd.dot''test/scaffold.dot']
+    file_paths=['test/launch4j.dot','test/hibernate.dot','test/pmd.dot','test/scaffold.dot']
     methods = ['WCA','HC','WCA_HC','SA','WCA_SA','PSO','WCA_PSO']
     TMQs = []
     cohe_coups = []
