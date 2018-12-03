@@ -215,7 +215,6 @@ def SA(targetMDG):
 
         total_climbers = hill_climbers + completed_climbers + completed_max_climbers
         total_climbers.sort()
-        max_score = total_climbers[-1].score
         print("Iteration ", i, ": ", total_climbers[-1].score)
 
         if total_climbers[-1].score - max_score != 0:
@@ -226,6 +225,7 @@ def SA(targetMDG):
         if len(hill_climbers) == 0 or not_increased == 10:
             break
         i += 1
+        max_score = total_climbers[-1].score
 
     total_climbers = hill_climbers + completed_climbers + completed_max_climbers
     total_climbers.sort()
@@ -273,7 +273,6 @@ def WCA_SA(targetMDG, WCAresult):
 
         total_climbers = hill_climbers + completed_climbers + completed_max_climbers
         total_climbers.sort()
-        max_score = total_climbers[-1].score
         print("Iteration ", i, ": ", total_climbers[-1].score)
 
         if total_climbers[-1].score - max_score != 0:
@@ -284,6 +283,7 @@ def WCA_SA(targetMDG, WCAresult):
         if len(hill_climbers) == 0 or not_increased == 10:
             break
         i += 1
+        max_score = total_climbers[-1].score
 
     total_climbers = hill_climbers + completed_climbers + completed_max_climbers
     total_climbers.sort()
