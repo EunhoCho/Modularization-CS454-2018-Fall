@@ -1,4 +1,3 @@
-import sys
 import DotParser
 import HC
 import SA
@@ -16,7 +15,7 @@ def make_target_MDG(file_path):
     :param file_path: A path of dot file
     :return: MDG graph of given dot file
     """
-    dot_file = DotParser.read_and_render(file_path)
+    dot_file = DotParser.read_and_render('test/' + file_path)
     # print(dot_file.source)
     
     # get edge information and parse it
@@ -91,7 +90,7 @@ def print_result(file_path):
     TMQ, cohe_coup, clusters_set = get_information(file_path)
     print("\n========file : " + file_path + "end ========\n\n\n")
 
-    f = open('test/result/' + file_path[5:-4] + '.csv', 'w', encoding='utf-8', newline='')
+    f = open('test/result/' + file_path[0:-4] + '.csv', 'w', encoding='utf-8', newline='')
     wr = csv.writer(f)
     wr.writerow(['Algorithm', 'TurboMQ', 'Cohesion', 'Coupling'])
         
