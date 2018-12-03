@@ -4,7 +4,7 @@ import random
 import math
 
 NUM_Population = 100
-NUM_Iteration = 40
+# NUM_Iteration = 40
 
 
 class SimulatedAnnealing:
@@ -198,8 +198,11 @@ def SA(targetMDG):
 
     # k: int, number of neighbors to be considered
     k = 20
+    i = 0
+    not_increased = 0
+    max_score = 0
 
-    for i in range(NUM_Iteration):
+    while True:
         for climber in hill_climbers[:]:
             result = climber.climb_with_annealing(k, i)
             if not result:
@@ -212,7 +215,17 @@ def SA(targetMDG):
 
         total_climbers = hill_climbers + completed_climbers + completed_max_climbers
         total_climbers.sort()
+        max_score = total_climbers[-1].score
         print("Iteration ", i, ": ", total_climbers[-1].score)
+
+        if total_climbers[-1].score - max_score != 0:
+            not_increased = 0
+        else:
+            not_increased += 1
+
+        if len(hill_climbers) == 0 or not_increased == 10:
+            break
+        i += 1
 
     total_climbers = hill_climbers + completed_climbers + completed_max_climbers
     total_climbers.sort()
@@ -243,8 +256,11 @@ def WCA_SA(targetMDG, WCAresult):
 
     # k: int, number of neighbors to be considered
     k = 20
+    i = 0
+    not_increased = 0
+    max_score = 0
 
-    for i in range(NUM_Iteration):
+    while True:
         for climber in hill_climbers[:]:
             result = climber.climb_with_annealing(k, i)
             if not result:
@@ -257,7 +273,17 @@ def WCA_SA(targetMDG, WCAresult):
 
         total_climbers = hill_climbers + completed_climbers + completed_max_climbers
         total_climbers.sort()
+        max_score = total_climbers[-1].score
         print("Iteration ", i, ": ", total_climbers[-1].score)
+
+        if total_climbers[-1].score - max_score != 0:
+            not_increased = 0
+        else:
+            not_increased += 1
+
+        if len(hill_climbers) == 0 or not_increased == 10:
+            break
+        i += 1
 
     total_climbers = hill_climbers + completed_climbers + completed_max_climbers
     total_climbers.sort()
