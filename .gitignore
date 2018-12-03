@@ -219,3 +219,4 @@ pip-selfcheck.json
 
 # No test file
 test/result.*
+test/result/
