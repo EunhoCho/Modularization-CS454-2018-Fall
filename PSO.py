@@ -5,7 +5,7 @@ import numpy as np
 from operator import itemgetter
 
 NUM_Population = 100
-NUM_Iteration = 20
+# NUM_Iteration = 20
 
 
 class ParticleSwarm:
@@ -264,7 +264,11 @@ def PSO(targetMDG):
     k = 15
 
     total_positions = positions[:]
-    for i in range(NUM_Iteration):
+    i = 0
+    not_increased = 0
+    max_score = 0
+
+    while True:
         for position in positions:
             position.update_velocity_and_position(w, c1, c2)
             position.update_cluster_with_position()
@@ -284,6 +288,16 @@ def PSO(targetMDG):
         max_completed_particle.gbest = total_positions[-1].gbest[:]
         max_completed_particle.update_score()
         total_positions.append(max_completed_particle)
+
+        if total_positions[-1].score - max_score != 0:
+            not_increased = 0
+        else:
+            not_increased += 1
+
+        if not_increased == 10:
+            break
+        i += 1
+        max_score = total_positions[-1].score
 
     max_position = total_positions[-1]
 
@@ -320,7 +334,11 @@ def WCA_PSO(targetMDG, WCAresult):
     k = 15
 
     total_positions = positions[:]
-    for i in range(NUM_Iteration):
+    i = 0
+    not_increased = 0
+    max_score = 0
+
+    while True:
         for position in positions:
             position.update_velocity_and_position(w, c1, c2)
             position.update_cluster_with_position()
@@ -340,6 +358,16 @@ def WCA_PSO(targetMDG, WCAresult):
         max_completed_particle.gbest = total_positions[-1].gbest[:]
         max_completed_particle.update_score()
         total_positions.append(max_completed_particle)
+
+        if total_positions[-1].score - max_score != 0:
+            not_increased = 0
+        else:
+            not_increased += 1
+
+        if not_increased == 10:
+            break
+        i += 1
+        max_score = total_positions[-1].score
 
     max_position = total_positions[-1]
 
