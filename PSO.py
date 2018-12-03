@@ -2,7 +2,6 @@ import Cluster
 import TurboMQ
 import random
 import numpy as np
-import pyswarms as ps
 from operator import itemgetter
 
 NUM_Population = 100
