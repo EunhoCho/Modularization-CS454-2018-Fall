@@ -40,8 +40,7 @@ def get_information(file_path):  # using target_MDG and a benchmark, create resu
     TMQ = []
     cohe_coup = []
     print("====WCA start====\n")
-    Result_WCA = WCA(targetMDG)
-    clusters_set.append(Result_WCA)
+    clusters_set.append(WCA(targetMDG))
     print("====WCA end====\n\n")
     
     print("====HC start====\n")
@@ -49,7 +48,7 @@ def get_information(file_path):  # using target_MDG and a benchmark, create resu
     print("====HC end====\n\n")
     
     print("====WCA_HC start====\n")
-    clusters_set.append(HC.WCA_HC(targetMDG, Result_WCA))
+    clusters_set.append(HC.WCA_HC(targetMDG, WCA(targetMDG)))
     print("====WCA_HC end====\n\n")
     
     print("====SA start====\n")
@@ -57,7 +56,7 @@ def get_information(file_path):  # using target_MDG and a benchmark, create resu
     print("====SA end====\n\n")
     
     print("====WCA_SA start====\n")
-    clusters_set.append(SA.WCA_SA(targetMDG, Result_WCA))
+    clusters_set.append(SA.WCA_SA(targetMDG, WCA(targetMDG)))
     print("====WCA_SA end====\n\n")
     
     print("====PSO start====\n\n")
@@ -65,7 +64,7 @@ def get_information(file_path):  # using target_MDG and a benchmark, create resu
     print("====PSO end====\n\n")
     
     print("====WCA_PSO start====\n\n")
-    clusters_set.append(PSO.WCA_PSO(targetMDG, Result_WCA))
+    clusters_set.append(PSO.WCA_PSO(targetMDG, WCA(targetMDG)))
     print("====WCA_PSO end====\n\n")
     
     # get TMQ data
