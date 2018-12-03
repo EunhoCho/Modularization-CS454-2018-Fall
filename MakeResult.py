@@ -81,7 +81,7 @@ def get_information(file_path):  # using target_MDG and a benchmark, create resu
 
 def print_result(file_path):
     """
-    Check each clustering algorithm for each file and print result and make csv file with result
+    Check each clustering algorithm for given file and print result and make csv file with result
     :return: None.
     """
     methods = ['WCA', 'HC', 'WCA_HC', 'SA', 'WCA_SA', 'PSO', 'WCA_PSO']

@@ -69,10 +69,11 @@ def parser(dot, arrow):
     edges = get_edges(b, arrow)
     return edges
 
-def write_file (filepath, method, clusters):
+
+def write_file(filepath, method, clusters):
     # if file exists, remove and create new file.
-    result_path = filepath[0:-4]
-    result_path = "result/"+result_path +"_"+ method +"_result.gv"
+    result_path = filepath[6:-4]
+    result_path = "test/result/" + result_path + "_" + method + "_result.gv"
     if os.path.exists(result_path):
         os.remove(result_path)
 
