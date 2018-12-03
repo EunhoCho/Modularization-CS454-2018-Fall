@@ -6,10 +6,16 @@ import MDG
 import PSO
 import TurboMQ
 from WCA import WCA
+import csv
 
 
 # read .gv file(dot) and create graphs
 def make_target_MDG(file_path):
+    """
+    Make MDG based on given file
+    :param file_path: A path of dot file
+    :return: MDG graph of given dot file
+    """
     dot_file = DotParser.read_and_render(file_path)
     # print(dot_file.source)
     
@@ -23,8 +29,14 @@ def make_target_MDG(file_path):
     return targetMDG
 
 
-def get_information(targetMDG, file_path): #using target_MDG and a benchmark, create result
-    methods = ['WCA','HC','WCA_HC','SA','WCA_SA','PSO','WCA_PSO']
+def get_information(file_path):  # using target_MDG and a benchmark, create result
+    """
+    Execute Each algorithm for given file and return TurboMQ, cohesion, and coupling
+    :param file_path: A path of dot file
+    :return: Clustering result - value of TurboMQ, A list of [Cohesion, Coupling], A list of result clusters
+    """
+    targetMDG = make_target_MDG(file_path)
+    methods = ['WCA', 'HC', 'WCA_HC', 'SA', 'WCA_SA', 'PSO', 'WCA_PSO']
     clusters_set = []
     TMQ = []
     cohe_coup = []
@@ -68,19 +80,26 @@ def get_information(targetMDG, file_path): #using target_MDG and a benchmark, cr
 
 
 def print_result():
-    file_paths=['test/launch4j.dot','test/hibernate.dot','test/pmd.dot','test/scaffold.dot']
-    methods = ['WCA','HC','WCA_HC','SA','WCA_SA','PSO','WCA_PSO']
+    """
+    Check each clustering algorithm for each file and print result and make csv file with result
+    :return: None.
+    """
+    file_paths = ['test/launch4j.dot', 'test/hibernate.dot', 'test/pmd.dot', 'test/scaffold.dot']
+    methods = ['WCA', 'HC', 'WCA_HC', 'SA', 'WCA_SA', 'PSO', 'WCA_PSO']
     TMQs = []
     cohe_coups = []
     
     # test for all benchmarks
     for file_path in file_paths:
         print("\n========file : "+file_path +"start ========\n")
-        targetMDG = make_target_MDG(file_path)
-        TMQ, cohe_coup, clusters_set = get_information(targetMDG, file_path)
+        TMQ, cohe_coup, clusters_set = get_information(file_path)
         TMQs.append(TMQ)
         cohe_coups.append(cohe_coup)
         print("\n========file : "+file_path +"end ========\n\n\n")
+
+    f = open('result.csv', 'w', encoding='utf-8', newline='')
+    wr = csv.writer()
+    wr.writerow(['File', 'Algorithm', 'TurboMQ', 'Cohesion', 'Coupling'])
         
     # print Information
     print("\n=====Result=====")
@@ -88,4 +107,6 @@ def print_result():
         for j in range(len(methods)):
             print(file_paths[i] + " " + methods[j])
             print("TMQ= " + str(TMQs[i][j]) + ", " + "Cohesion= " + str(cohe_coups[i][j][0])+ ", " + "Coupling= " + str(cohe_coups[i][j][1])+"\n")
-    return 0
+            wr.writerow([file_paths[i], methods[j], TMQs[i][j], cohe_coups[i][j][0], cohe_coups[i][j][1]])
+
+    f.close()
