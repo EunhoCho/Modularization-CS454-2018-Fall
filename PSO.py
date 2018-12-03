@@ -118,14 +118,18 @@ class ParticleSwarm:
         others = others[:]
         others.remove(self)
         particles_with_distance = []
+        sorted_particles_with_distance = []
         neighborhoods = []
         for other in others:
             differ = self.distance_between_positions(other)
             particles_with_distance.append([other, differ])
-        sorted_particles_with_distance = sorted(particles_with_distance, key=itemgetter(1))
 
         if k > len(others):
             k = len(others)
+        for i in range(k):
+            sorted_particles_with_distance.append(max(particles_with_distance, key=itemgetter(1)))
+            particles_with_distance.remove(sorted_particles_with_distance[-1])
+
         for i in range(k):
             neighborhoods.append(sorted_particles_with_distance[i][0])
         return neighborhoods
