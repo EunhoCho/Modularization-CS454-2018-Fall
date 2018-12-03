@@ -85,25 +85,21 @@ def print_result(file_path):
     :return: None.
     """
     methods = ['WCA', 'HC', 'WCA_HC', 'SA', 'WCA_SA', 'PSO', 'WCA_PSO']
-    TMQs = []
-    cohe_coups = []
     
     # test for all benchmarks
     print("\n========file : " + file_path + "start ========\n")
     TMQ, cohe_coup, clusters_set = get_information(file_path)
-    TMQs.append(TMQ)
-    cohe_coups.append(cohe_coup)
     print("\n========file : " + file_path + "end ========\n\n\n")
 
-    f = open('result_' + file_path + '.csv', 'w', encoding='utf-8', newline='')
-    wr = csv.writer()
+    f = open('test/result/' + file_path[5:-4] + '.csv', 'w', encoding='utf-8', newline='')
+    wr = csv.writer(f)
     wr.writerow(['Algorithm', 'TurboMQ', 'Cohesion', 'Coupling'])
         
     # print Information
     print("\n=====Result=====")
     for j in range(len(methods)):
         print(file_path + " " + methods[j])
-        print("TMQ= " + str(TMQs[j]) + ", " + "Cohesion= " + str(cohe_coups[j][0])+ ", " + "Coupling= " + str(cohe_coups[j][1])+"\n")
-        wr.writerow([methods[j], TMQs[j], cohe_coups[j][0], cohe_coups[j][1]])
+        print("TMQ= " + str(TMQ[j]) + ", " + "Cohesion= " + str(cohe_coup[j][0]) + ", " + "Coupling= " + str(cohe_coup[j][1])+"\n")
+        wr.writerow([methods[j], TMQ[j], cohe_coup[j][0], cohe_coup[j][1]])
 
     f.close()
