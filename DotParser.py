@@ -70,29 +70,25 @@ def parser(dot, arrow):
     return edges
 
 
-def write_file(filepath, method, clusters):
+def write_file(filepath, method, clusters, targetMDG):
     # if file exists, remove and create new file.
-    result_path = filepath[0:-4]
-    result_path = "test/result/" + result_path + "_" + method + "_result.gv"
+    result_path = "test/result/" + filepath[0:-4] + "_" + method + "_result.gv"
     if os.path.exists(result_path):
         os.remove(result_path)
 
     f = open(result_path, "w")
-    g = open('test/' + filepath, "r")
-    lines = g.readlines()
-    g.close()
+    f.write('digraph "summary" {\n')
+    for edge in targetMDG.edges:
+        f.write('  ' + str(edge[0]) + '                       -> ' + str(edge[1]) + ';\n')
 
-    for i in range(len(lines) - 1):
-        f.write (lines[i])
     f.write("\n\n")
     cluster_num = len(clusters)
 
     for i in range(cluster_num):
         data = "  subgraph cluster_" + str(i) + " {\n"
         f.write(data)
-        data = '    label="Cluster ' + str(i) +'";'
         for node in clusters[i].get_nodes():
-            data = "    "+ str(node) +"; "
+            data = "    " + str(node) + "; "
             f.write(data)
         f.write("\n")
         f.write("  }\n")

@@ -44,7 +44,7 @@ def main():
             MakeResult.print_result(single_file)
 
         if modularizeMethod != 'All':
-            DotParser.write_file(single_file, modularizeMethod, clusters)
+            DotParser.write_file(single_file, modularizeMethod, clusters, targetMDG)
 
 
 if __name__ == "__main__":

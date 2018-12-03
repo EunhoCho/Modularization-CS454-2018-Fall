@@ -74,7 +74,7 @@ def get_information(file_path):  # using target_MDG and a benchmark, create resu
         cohe_coup.append(TurboMQ.get_cohesion_coupling(clusters, targetMDG))
     # write result files
     for i in range(len(methods)):
-        DotParser.write_file(file_path, methods[i], clusters_set[i])
+        DotParser.write_file(file_path, methods[i], clusters_set[i], targetMDG)
         
     return TMQ, cohe_coup, clusters_set
 
