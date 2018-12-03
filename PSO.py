@@ -332,6 +332,15 @@ def WCA_PSO(targetMDG, WCAresult):
         total_positions.sort()
         print("Iteration ", i, ": ", total_positions[-1].score)
 
+        max_completed_particle = ParticleSwarm(targetMDG)
+        max_completed_particle.result = total_positions[-1].result[:]
+        max_completed_particle.position = total_positions[-1].position[:][:]
+        max_completed_particle.velocity = total_positions[-1].velocity[:][:]
+        max_completed_particle.lbest = total_positions[-1].lbest[:]
+        max_completed_particle.gbest = total_positions[-1].gbest[:]
+        max_completed_particle.update_score()
+        total_positions.append(max_completed_particle)
+
     max_position = total_positions[-1]
 
     print("TurboMQ = ", max_position.score)
