@@ -102,7 +102,7 @@ def merge_cluster(c1, c2, clusters, nodes):
     numnode2 = len(c2.get_nodes())
 
     for i in range(numofnodes):
-        feature_vector[i] = feature1[i] + feature2[i]
+        feature_vector[i] = (numnode1*feature1[i]) + (numnode2*feature2[i])
         feature_vector[i] /= (numnode1 + numnode2)
     merged_cluster.set_feature_vector(feature_vector)
 
@@ -133,10 +133,10 @@ def applyWCA(clusters, targetMDG):
             count = 0
         else:
             count += 1
-        if count == 3:
+        if count == 30:
             print("TurboMQ = ", TurboMQ)
             break
-        # print("TurboMQ = ", TMQ)
+        print("Interation  "+ str(i) + " :   " + str(max_TurboMQ))
     return max_TurboMQ, max_clusters
 
 
