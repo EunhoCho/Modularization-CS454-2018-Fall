@@ -2,8 +2,7 @@ import Cluster
 import TurboMQ
 import random
 
-NUM_Population = 1
-NUM_Iteration = 10
+NUM_Population = 10
 
 
 class HillClimber:
@@ -168,8 +167,11 @@ def HC(targetMDG):
 
     completed_climbers = []
     total_climbers = []
+    max_score = 0
+    not_increased = 0
+    i = 0
 
-    for i in range(NUM_Iteration):
+    while True:
         for climber in hill_climbers[:]:
             result = climber.climb()
             if not result:
@@ -178,6 +180,16 @@ def HC(targetMDG):
         total_climbers = hill_climbers + completed_climbers
         total_climbers.sort()
         print("Iteration ", i, ": ", total_climbers[-1].score)
+
+        if total_climbers[-1].score - max_score != 0:
+            not_increased = 0
+        else:
+            not_increased += 1
+
+        if len(hill_climbers) == 0 or not_increased == 10:
+            break
+        i += 1
+        max_score = total_climbers[-1].score
 
     total_climbers = hill_climbers + completed_climbers
     total_climbers.sort()
@@ -200,11 +212,22 @@ def WCA_HC(targetMDG, WCAresult):
     :return: A list of clusters after algorithm
     """
     hill_climber = HillClimber(targetMDG, WCAresult)
-    for i in range(NUM_Iteration):
+    i = 0
+    max_score = 0
+    not_increased = 0
+    while True:
         result = hill_climber.climb()
         print("Iteration ", i, ": ", hill_climber.score)
-        if not result:
+
+        if hill_climber.score - max_score != 0:
+            not_increased = 0
+        else:
+            not_increased += 1
+
+        if not result or not_increased == 10:
             break
+        i += 1
+        max_score = hill_climber.score
 
     print("TurboMQ = ", hill_climber.score)
     for c in hill_climber.result:  # print all clusters which are not singleton
