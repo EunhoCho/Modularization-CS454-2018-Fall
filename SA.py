@@ -173,6 +173,15 @@ class SimulatedAnnealing:
         """
         self.score = TurboMQ.calculate_fitness(self.result, self.graph)
 
+    def remove_empty_cluster(self):
+        """
+        Remove empty clusters in the list of clusters
+        :return: None
+        """
+        for cluster in self.result[:]:
+            if len(cluster.get_nodes()) == 0:
+                self.result.remove(cluster)
+
 
 def SA(targetMDG):
     """
@@ -260,4 +269,5 @@ def WCA_SA(targetMDG, WCAresult):
         if 1 != len(c.get_nodes()):
             print(c.get_nodes())
 
+    max_climber.remove_empty_cluster()
     return max_climber.result
