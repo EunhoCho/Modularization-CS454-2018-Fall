@@ -14,7 +14,6 @@ def main():
                         help='File path for dot file')
     parser.add_argument('-a', help='Algorithm for modularization. All, WCA, HC, WCA_HC, SA, WCA_SA, PSO, WCA_PSO')
     args = parser.parse_args()
-    print(args)
 
     file_path = args.file_path
     if args.a:
