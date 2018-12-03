@@ -195,10 +195,10 @@ def SA(targetMDG):
             if not result:
                 completed_climbers.append(climber)
                 hill_climbers.remove(climber)
-        max_completed_climber = SimulatedAnnealing(targetMDG)
-        max_completed_climber.result = climber.max_result
-        max_completed_climber.update_score()
-        completed_max_climbers.append(max_completed_climber)
+            max_completed_climber = SimulatedAnnealing(targetMDG)
+            max_completed_climber.result = climber.max_result
+            max_completed_climber.update_score()
+            completed_max_climbers.append(max_completed_climber)
 
         total_climbers = hill_climbers + completed_climbers + completed_max_climbers
         total_climbers.sort()
@@ -224,24 +224,39 @@ def WCA_SA(targetMDG, WCAresult):
     :param WCAresult: Result of WCA algorithm based on dependency graph
     :return: A list of clusters after algorithm
     """
-    hill_climber = SimulatedAnnealing(targetMDG, WCAresult)
+    hill_climbers = []
+    for i in range(NUM_Population):
+        hill_climbers.append(SimulatedAnnealing(targetMDG, WCAresult))
+
+    completed_climbers = []
+    completed_max_climbers = []
 
     # k: int, number of neighbors to be considered
     k = 20
-    for i in range(NUM_Iteration):
-        result = hill_climber.climb_with_annealing(k, i)
-        print("Iteration ", i, ": ", hill_climber.score)
-        if not result:
-            break
 
-    max_completed_climber = SimulatedAnnealing(targetMDG)
-    max_completed_climber.result = hill_climber.max_result
-    max_completed_climber.update_score()
-    if max_completed_climber > hill_climber:
-        hill_climber = max_completed_climber
-    print("TurboMQ = ", hill_climber.score)
-    for c in hill_climber.result:  # print all clusters which are not singleton
+    for i in range(NUM_Iteration):
+        for climber in hill_climbers[:]:
+            result = climber.climb_with_annealing(k, i)
+            if not result:
+                completed_climbers.append(climber)
+                hill_climbers.remove(climber)
+            max_completed_climber = SimulatedAnnealing(targetMDG)
+            max_completed_climber.result = climber.max_result
+            max_completed_climber.update_score()
+            completed_max_climbers.append(max_completed_climber)
+
+        total_climbers = hill_climbers + completed_climbers + completed_max_climbers
+        total_climbers.sort()
+        print("Iteration ", i, ": ", total_climbers[-1].score)
+
+    total_climbers = hill_climbers + completed_climbers + completed_max_climbers
+    total_climbers.sort()
+
+    max_climber = total_climbers[-1]
+
+    print("TurboMQ = ", max_climber.score)
+    for c in max_climber.result:  # print all clusters which are not singleton
         if 1 != len(c.get_nodes()):
             print(c.get_nodes())
 
-    return hill_climber.result
+    return max_climber.result
