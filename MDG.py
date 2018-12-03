@@ -64,5 +64,5 @@ def is_java_node(node_name):
            or node_name[:5] == '"jdk.' \
            or node_name[:7] == '"javax.' \
            or node_name[:8] == '"javafx.' \
-           or node_name[:5] == '"org."'\
+           or node_name[:5] == '"org.'\
            or node_name == '"not found"'
