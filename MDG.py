@@ -8,24 +8,25 @@ class MDG:
         self.graph = []
 
         for edge in edges:
-            from_node, from_idx = self.search_node(edge[0])
-            to_node, to_idx = self.search_node(edge[1])
-            if from_node is None:
-                from_node = Node.Node(edge[0])
-                self.add_node(from_node)
-                from_idx = len(self.nodes) - 1
-            if to_node is None:
-                to_node = Node.Node(edge[1])
-                self.add_node(to_node)
-                to_idx = len(self.nodes) - 1
+            if not is_java_node(edge[0]) and not is_java_node(edge[1]):
+                from_node, from_idx = self.search_node(edge[0])
+                to_node, to_idx = self.search_node(edge[1])
+                if from_node is None:
+                    from_node = Node.Node(edge[0])
+                    self.add_node(from_node)
+                    from_idx = len(self.nodes) - 1
+                if to_node is None:
+                    to_node = Node.Node(edge[1])
+                    self.add_node(to_node)
+                    to_idx = len(self.nodes) - 1
 
-            from_node.add_from_node(to_node)
-            to_node.add_to_node(from_node)
-            self.graph[from_idx][to_idx] = 1
-            self.graph[to_idx][from_idx] = 1
-            self.edges.append([from_node, to_node])
+                from_node.add_from_node(to_node)
+                to_node.add_to_node(from_node)
+                self.graph[from_idx][to_idx] = 1
+                self.graph[to_idx][from_idx] = 1
+                self.edges.append([from_node, to_node])
 
-            self.set_feature_vector()
+        self.set_feature_vector()
 
     def search_node(self, name):
         """
@@ -56,3 +57,12 @@ class MDG:
         """
         for i in range(len(self.nodes)):
             self.nodes[i].set_feature_vector(self.graph[i])
+
+
+def is_java_node(node_name):
+    return node_name[:6] == '"java.' \
+           or node_name[:5] == '"jdk.' \
+           or node_name[:7] == '"javax.' \
+           or node_name[:8] == '"javafx.' \
+           or node_name[:5] == '"org."'\
+           or node_name == '"not found"'
