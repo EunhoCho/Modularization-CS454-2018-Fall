@@ -2,7 +2,6 @@ import sys
 import DotParser
 import HC
 import SA
-import MDG
 import PSO
 import MakeResult
 from WCA import WCA
