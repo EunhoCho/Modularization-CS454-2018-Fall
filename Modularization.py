@@ -17,7 +17,10 @@ def main():
     print(args)
 
     file_path = args.file_path
-    modularizeMethod = args.a
+    if args.a:
+        modularizeMethod = args.a
+    else:
+        modularizeMethod = 'All'
 
     for single_file in file_path:
 
@@ -38,10 +41,10 @@ def main():
         elif modularizeMethod == 'WCA_PSO':
             clusters = PSO.WCA_PSO(targetMDG, WCA(targetMDG))
         elif modularizeMethod == 'All':
-            MakeResult.print_result(file_path)
+            MakeResult.print_result(single_file)
 
         if modularizeMethod != 'All':
-            DotParser.write_file(file_path, modularizeMethod, clusters)
+            DotParser.write_file(single_file, modularizeMethod, clusters)
 
 
 if __name__ == "__main__":
