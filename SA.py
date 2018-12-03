@@ -6,6 +6,7 @@ import math
 NUM_Population = 100
 NUM_Iteration = 40
 
+
 class SimulatedAnnealing:
     def __init__(self, targetMDG, WCAresult=None):
         self.graph = targetMDG
