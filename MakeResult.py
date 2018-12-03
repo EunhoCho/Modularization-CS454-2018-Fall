@@ -79,34 +79,31 @@ def get_information(file_path):  # using target_MDG and a benchmark, create resu
     return TMQ, cohe_coup, clusters_set
 
 
-def print_result():
+def print_result(file_path):
     """
     Check each clustering algorithm for each file and print result and make csv file with result
     :return: None.
     """
-    file_paths = ['test/launch4j.dot', 'test/hibernate.dot', 'test/pmd.dot', 'test/scaffold.dot']
     methods = ['WCA', 'HC', 'WCA_HC', 'SA', 'WCA_SA', 'PSO', 'WCA_PSO']
     TMQs = []
     cohe_coups = []
     
     # test for all benchmarks
-    for file_path in file_paths:
-        print("\n========file : "+file_path +"start ========\n")
-        TMQ, cohe_coup, clusters_set = get_information(file_path)
-        TMQs.append(TMQ)
-        cohe_coups.append(cohe_coup)
-        print("\n========file : "+file_path +"end ========\n\n\n")
+    print("\n========file : " + file_path + "start ========\n")
+    TMQ, cohe_coup, clusters_set = get_information(file_path)
+    TMQs.append(TMQ)
+    cohe_coups.append(cohe_coup)
+    print("\n========file : " + file_path + "end ========\n\n\n")
 
-    f = open('result.csv', 'w', encoding='utf-8', newline='')
+    f = open('result_' + file_path + '.csv', 'w', encoding='utf-8', newline='')
     wr = csv.writer()
-    wr.writerow(['File', 'Algorithm', 'TurboMQ', 'Cohesion', 'Coupling'])
+    wr.writerow(['Algorithm', 'TurboMQ', 'Cohesion', 'Coupling'])
         
     # print Information
     print("\n=====Result=====")
-    for i in range(len(file_paths)):
-        for j in range(len(methods)):
-            print(file_paths[i] + " " + methods[j])
-            print("TMQ= " + str(TMQs[i][j]) + ", " + "Cohesion= " + str(cohe_coups[i][j][0])+ ", " + "Coupling= " + str(cohe_coups[i][j][1])+"\n")
-            wr.writerow([file_paths[i], methods[j], TMQs[i][j], cohe_coups[i][j][0], cohe_coups[i][j][1]])
+    for j in range(len(methods)):
+        print(file_path + " " + methods[j])
+        print("TMQ= " + str(TMQs[j]) + ", " + "Cohesion= " + str(cohe_coups[j][0])+ ", " + "Coupling= " + str(cohe_coups[j][1])+"\n")
+        wr.writerow([methods[j], TMQs[j], cohe_coups[j][0], cohe_coups[j][1]])
 
     f.close()
