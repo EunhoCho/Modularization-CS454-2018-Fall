@@ -162,7 +162,7 @@ class SimulatedAnnealing:
             self.replace_node(target_node, from_idx, to_idx)
             self.max_result = self.result[:]
         else:
-            if random.random() < math.exp((self.score - max_score) / (t + 1)) - 1:
+            if random.random() < math.exp((max_score - self.score) / (t + 1)) - 1:
                 self.replace_node(target_node, from_idx, to_idx)
         return True
 
@@ -259,10 +259,11 @@ def WCA_SA(targetMDG, WCAresult):
     i = 0
     not_increased = 0
     max_score = 0
+    Temperature = 20
 
     while True:
         for climber in hill_climbers[:]:
-            result = climber.climb_with_annealing(k, i)
+            result = climber.climb_with_annealing(k, Temperature)
             if not result:
                 completed_climbers.append(climber)
                 hill_climbers.remove(climber)
@@ -284,6 +285,8 @@ def WCA_SA(targetMDG, WCAresult):
             break
         i += 1
         max_score = total_climbers[-1].score
+        if Temperature > 0:
+            Temperature -= 0.5
 
     total_climbers = hill_climbers + completed_climbers + completed_max_climbers
     total_climbers.sort()
