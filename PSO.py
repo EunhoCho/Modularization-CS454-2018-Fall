@@ -51,6 +51,22 @@ class ParticleSwarm:
     def __le__(self, other):
         return self.score <= other.score
 
+    def Randomize_velocity(self):
+        """
+        Randomize velocity because initial position is same for all particle(PSO, WAC_PSO)
+        Each velocity is between -3 and 3.
+        :return: None
+        """
+        velocity = [[0] * len(self.result)] * len(self.position)
+        Num_Node = len(self.position)
+        Num_Cluster = len(self.position[0])
+        # print(Num_Node, Num_Cluster)
+        for i in range(Num_Node):
+            for j in range(Num_Cluster):
+                r = (random.random() - 0.5) * 6
+                velocity[i][j] = r
+        self.velocity = velocity
+
     def cluster_to_position_matrix(self, c=None):
         """
         Change list of clusters to position matrix for binary PSO
@@ -99,8 +115,12 @@ class ParticleSwarm:
         :return: differ: number of difference between two matrix
         """
         differ = 0
+        # Num_Node = len(other.position)
+        # Num_Cluster = len(other.position[0])
+        # print(Num_Node, Num_Cluster)
         Num_Node = len(self.position)
         Num_Cluster = len(self.position[0])
+        # print(Num_Node, Num_Cluster)
         for i in range(Num_Node):
             for j in range(Num_Cluster):
                 if self.position[i][j] + other.position[i][j] == 1:
@@ -239,6 +259,21 @@ class ParticleSwarm:
             if len(cluster.get_nodes()) == 0:
                 clusters.remove(cluster)
 
+    def copy_particle_without_random_velocity(self, other):
+        """
+        Copy Particle's data; list of position, velocity, cluster, lbest, gbest
+        :param other: Another particle whose data will be copied
+        :return: None
+        """
+        self.result = other.result[:]
+        self.score = other.get_score()
+        self.position = other.position[:][:]
+        self.velocity = other.velocity[:][:]
+        # Initial velocity is random because initial position is same for all particle(PSO, WAC_PSO)
+        self.Randomize_velocity()
+        self.lbest = other.lbest[:]
+        self.gbest = other.gbest[:]
+
 
 def PSO(targetMDG):
     """
@@ -252,6 +287,14 @@ def PSO(targetMDG):
     positions.append(SampleParticle)
     for i in range(NUM_Population - 1):
         positions.append(ParticleSwarm(targetMDG, Num_Cluster))
+        # Initial velocity is random because initial position is same for all particle(PSO, WAC_PSO)
+        positions[-1].Randomize_velocity()
+
+    # SampleParticle = ParticleSwarm(targetMDG)
+    # Num_Cluster = len(SampleParticle.result)
+    # positions.append(SampleParticle)
+    # for i in range(NUM_Population - 1):
+    #     positions.append(ParticleSwarm(targetMDG, Num_Cluster))
 
     # Initialize swarm, arbitrary
     # c1: float, cognitive parameter, 1 - 2
@@ -317,11 +360,16 @@ def WCA_PSO(targetMDG, WCAresult):
     :return: A list of clusters after algorithm
     """
     positions = []
-    SampleParticle = ParticleSwarm(targetMDG, WCAresult=WCAresult)
-    Num_Cluster = len(SampleParticle.result)
-    positions.append(SampleParticle)
-    for i in range(NUM_Population - 1):
-        positions.append(ParticleSwarm(targetMDG, Num_Cluster))
+    for i in range(NUM_Population):
+        positions.append(ParticleSwarm(targetMDG, WCAresult=WCAresult))
+        # Initial velocity is random because initial position is same for all particle(PSO, WAC_PSO)
+        positions[-1].Randomize_velocity()
+
+    # SampleParticle = ParticleSwarm(targetMDG, WCAresult=WCAresult)
+    # Num_Cluster = len(SampleParticle.result)
+    # positions.append(SampleParticle)
+    # for i in range(NUM_Population - 1):
+    #     positions.append(ParticleSwarm(targetMDG, Num_Cluster))
 
     # Initialize swarm, arbitrary
     # c1: float, cognitive parameter, 1 - 2
